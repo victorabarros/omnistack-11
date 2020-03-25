@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/victorabarros/omnistack-11#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "knex": "^0.20.13",
     "sqlite3": "^4.1.1"
