@@ -1,3 +1,4 @@
 express
 knex
 sqlite3
+body-parser

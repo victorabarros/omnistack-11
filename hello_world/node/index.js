@@ -1,11 +1,15 @@
-express = require('express');
+var express = require('express'),
+    app     = express(),
+    port    = parseInt(process.env.PORT, 10) || 8080;
 
-const app = express();
-
-app.post('/', (request, response) => {
-    const payload = request.body;
-    console.log(payload);
-    return response.json({'success': true});
+app.configure(function(){
+  app.use(express.bodyParser());
+  app.use(app.router);
 });
 
-app.listen(3334);
+app.listen(port);
+
+app.post("/someRoute", function(req, res) {
+  console.log(req.body);
+  res.send({ status: 'SUCCESS' });
+});
