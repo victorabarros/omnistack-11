@@ -5,6 +5,7 @@ const IncidentController = require('./controller/IncidentController')
 const routes = express.Router();
 
 routes.get('/ongs', OngController.index);
+routes.get('/ongs/:id/incidents', OngController.incidentsByOng);
 routes.post('/ongs', OngController.create);
 
 routes.get('/incidents', IncidentController.index);

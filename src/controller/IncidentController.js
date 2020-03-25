@@ -30,26 +30,21 @@ module.exports = {
         return response.json(incidents)
     },
 
-    async indexByOngId(request, response) {
-        return response.json({'message': 'not implemented yet.'})
-    },
-
     async delete(request, response) {
-        // incident id from route param
+        // page and pageSize from query param
+        const {page = 0, pageSize = 5} = request.query;
         const id = request.params.id;
         const ong_id = request.headers['ong-id'];
 
-        const incident = await db('incidents')
+        const result = await db('incidents')
+            .limit(pageSize)
+            .offset(page * pageSize)
             .where('id', id)
-            .first();
-        
-        if (ong_id != incident.ong_id) {
-            return response.status(401)
-                           .json({'error': 'Ong Id doesn\'t match'})
-        }
-        // Seria mais eficiente tentar fazer o delete com duas condicionais:
-        // id e ong_id? Não não necessita fazer duas queries
-        await db('incidents').where('id', id).delete();
-        return response.json({'success': true})
+            .where('ong_id', ong_id)
+            .delete();
+        if (result == 0){
+            return response.status(401).json({"message": "No row found."})
+        };
+        return response.status(204).send();
     }
 };

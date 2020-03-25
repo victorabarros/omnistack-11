@@ -25,6 +25,16 @@ module.exports = {
         response.header('X-Total-Count', count['count(*)']);
 
         return response.json(ongs)
+    },
+
+    async incidentsByOng(request, response) {
+        const ong_id = request.params.id;
+
+        const incidents = await db('incidents')
+            .where('ong_id', ong_id)
+            .select('*');
+
+            return response.json(incidents)
     }
     // delete(){} return status 204 no content
 };
